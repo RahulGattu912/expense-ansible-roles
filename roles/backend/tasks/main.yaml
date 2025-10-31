@@ -16,21 +16,26 @@
   ansible.builtin.user:
     name: expense
 
-- name: create application directory
-  ansible.builtin.file:
-    path: /app
-    state: directory # create directory if not exists
+- name: include from common role
+  ansible.builtin.include_role:
+    name: common
+    tasks_from: main.yaml
 
-- name: download backend application code
-  ansible.builtin.get_url:
-    url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
-    dest: /tmp/backend.zip
+# - name: create application directory
+#   ansible.builtin.file:
+#     path: /app
+#     state: directory # create directory if not exists
 
-- name: unzip backend application code
-  ansible.builtin.unarchive:
-    src: /tmp/backend.zip
-    dest: /app
-    remote_src: yes # file is already on remote server so set remote_src to yes i.e it is already present on other remote server which is not under ansible control
+# - name: download backend application code
+#   ansible.builtin.get_url:
+#     url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
+#     dest: /tmp/backend.zip
+
+# - name: unzip backend application code
+#   ansible.builtin.unarchive:
+#     src: /tmp/backend.zip
+#     dest: /app
+#     remote_src: yes # file is already on remote server so set remote_src to yes i.e it is already present on other remote server which is not under ansible control
 
 - name: install backend dependencies
   community.general.npm:

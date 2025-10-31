@@ -1,3 +1,5 @@
 MYSQL_HOST: mysql.learndevops.online
 MYSQL_USER: root
 MYSQL_PASSWORD: ExpenseApp@1
+APP_LOCATION: /app
+APP_DOWNLOAD_URL: https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
