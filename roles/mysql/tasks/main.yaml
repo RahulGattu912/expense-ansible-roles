@@ -1,0 +1,34 @@
+- name: Install MySQL libraries
+  ansible.builtin.pip:
+    name: "{{ item }}"
+    executable: pip3.9
+  loop: # loop should not belong to ansible.builtin.pip. it should be at the same indentation level
+    - cryptography
+    - PyMySQL
+
+- name: Install MySQL Server
+  ansible.builtin.package:
+    name: mysql-server
+    state: installed
+
+- name: Ensure MySQL service is running and enabled
+  ansible.builtin.service:
+    name: mysqld
+    state: started
+    enabled: yes
+
+- name: connect to mysql server
+  community.mysql.mysql_info:
+    login_user: root
+    login_password: "{{  mysql_root_password }}"
+    login_host: mysql.learndevops.online
+  register: mysql_info
+  ignore_errors: true
+
+- name: print the output
+  ansible.builtin.debug:
+    msg: "MySQL info: {{ mysql_info }}"
+
+- name: setup root password
+  ansible.builtin.command: " mysql_secure_installation --set-root-pass {{  mysql_root_password }} "
+  when: mysql_info.failed is true
