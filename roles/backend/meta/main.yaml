@@ -1,0 +1,2 @@
+dependencies: # specify role dependencies here
+  - role: common

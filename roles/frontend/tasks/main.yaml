@@ -9,26 +9,31 @@
     state: started
     enabled: yes
 
-- name: delete html directory
-  ansible.builtin.file:
-    path: /usr/share/nginx/html
-    state: absent # delete directory if exists
+- name: include common role tasks
+  ansible.builtin.include_role:
+    name: common
+    tasks_from: main.yaml # if we do not specify tasks_from it will take default main.yaml. if we have multiple task files we can specify here
 
-- name: create html directory
-  ansible.builtin.file:
-    path: /usr/share/nginx/html
-    state: directory
+# - name: delete html directory
+#   ansible.builtin.file:
+#     path: /usr/share/nginx/html
+#     state: absent # delete directory if exists
 
-- name: download frontend code
-  ansible.builtin.get_url:
-    url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip
-    dest: /tmp/frontend.zip
+# - name: create html directory
+#   ansible.builtin.file:
+#     path: /usr/share/nginx/html
+#     state: directory
 
-- name: unzip frontend code
-  ansible.builtin.unarchive:
-    src: /tmp/frontend.zip
-    dest: /usr/share/nginx/html
-    remote_src: yes
+# - name: download frontend code
+#   ansible.builtin.get_url:
+#     url: https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip
+#     dest: /tmp/frontend.zip
+
+# - name: unzip frontend code
+#   ansible.builtin.unarchive:
+#     src: /tmp/frontend.zip
+#     dest: /usr/share/nginx/html
+#     remote_src: yes
 
 - name: copy expense config
   ansible.builtin.template:
