@@ -30,7 +30,7 @@
   ansible.builtin.unarchive:
     src: /tmp/backend.zip
     dest: /app
-  remote_src: yes # file is already on remote server so set remote_src to yes i.e it is already present on other remote server which is not under ansible control
+    remote_src: yes # file is already on remote server so set remote_src to yes i.e it is already present on other remote server which is not under ansible control
 
 - name: install backend dependencies
   community.general.npm:
