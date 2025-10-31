@@ -1,4 +1,4 @@
-- name: disable current nodejs
+- name: disable current nodejs # these tasks need not to be run every time playbook is run
   ansible.builtin.command: dnf module disable nodejs -y
 
 - name: enable nodejs 20
@@ -17,6 +17,8 @@
     name: expense
 
 - name: include from common role
+  tags: # lets you run only specific tasks when running the playbook with --tags option
+    - deployment
   ansible.builtin.include_role:
     name: common
     tasks_from: main.yaml
@@ -38,6 +40,8 @@
 #     remote_src: yes # file is already on remote server so set remote_src to yes i.e it is already present on other remote server which is not under ansible control
 
 - name: install backend dependencies
+  tags:
+    - deployment
   community.general.npm:
     path: /app
 
@@ -65,6 +69,8 @@
     target: /app/schema/backend.sql
 
 - name: daemon reload and restart service
+  tags:
+    - deployment
   ansible.builtin.systemd_service:
     name: backend
     daemon_reload: true
