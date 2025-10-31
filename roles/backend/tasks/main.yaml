@@ -39,7 +39,7 @@
 - name: copy backend service file
   # ansible.builtin.copy: # this makes ansible to search for file in files folder of the role. inorder to search in templates folder we need to use template module
   ansible.builtin.template: # to process jinja2 template files
-    src: backend.service # file is present in our system i.e ansible node, so need not to write remote src: yes
+    src: backend.service.j2 # file is present in our system i.e ansible node, so need not to write remote src: yes
     dest: /etc/systemd/system/backend.service
 
 - name: install python libraries
