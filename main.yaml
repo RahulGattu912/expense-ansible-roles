@@ -3,3 +3,4 @@
   become: yes # use sudo to run tasks as root
   roles:
     - "{{ component }}"
+# component is given as backend, it triggers backend role
