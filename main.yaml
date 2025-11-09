@@ -1,0 +1,5 @@
+- name: configure {{ component }} server
+  hosts: all
+  become: yes # use sudo to run tasks as root
+  roles:
+    - "{{ component }}"
